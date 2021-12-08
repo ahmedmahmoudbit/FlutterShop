@@ -20,8 +20,6 @@ class BoardingModel {
 }
 
 class OnBoardingScreen extends StatefulWidget {
-
-
    OnBoardingScreen({Key? key}) : super(key: key);
 
   @override

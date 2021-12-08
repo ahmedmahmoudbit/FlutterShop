@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shop_app/shared/styles/colors.dart';
 
 ThemeData darkTheme = ThemeData(
 // لون اتطبيق الرئيسي
-  primarySwatch: Colors.deepOrange,
+  primarySwatch: Colors.grey,
   floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: Colors.deepOrange,
+    backgroundColor: colorDefault,
   ),
   scaffoldBackgroundColor: HexColor('423F3E'),
   appBarTheme: AppBarTheme(
@@ -46,7 +47,7 @@ ThemeData darkTheme = ThemeData(
 
 ThemeData lightTheme = ThemeData(
 // لون اتطبيق الرئيسي
-primarySwatch: Colors.deepOrange,
+primarySwatch: Colors.grey,
 textTheme: TextTheme(
 bodyText1: TextStyle(
 fontSize: 18 , color: HexColor('212121') , fontWeight: FontWeight.bold
@@ -55,7 +56,7 @@ bodyText2: TextStyle( fontSize: 14 , color: HexColor('4A403A') , fontWeight: Fon
 ),
 fontFamily: 'Bals',
 floatingActionButtonTheme: FloatingActionButtonThemeData(
-backgroundColor: Colors.deepOrange,
+backgroundColor: colorDefault,
 ),
 scaffoldBackgroundColor: Colors.white,
 appBarTheme: AppBarTheme(
@@ -78,6 +79,6 @@ elevation: 1.0,
 bottomNavigationBarTheme: BottomNavigationBarThemeData(
 type: BottomNavigationBarType.fixed,
 elevation: 20.0,
-selectedItemColor: Colors.deepOrange,
+selectedItemColor: colorDefault,
 )
 );
