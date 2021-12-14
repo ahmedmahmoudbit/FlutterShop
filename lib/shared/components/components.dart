@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shop_app/shared/styles/colors.dart';
 
 void navigateTo(context , widget)=>
     Navigator.push(context, MaterialPageRoute(
@@ -57,9 +59,9 @@ Widget defaultFormField({
 
 Widget defaultButton({
   double width = double.infinity,
-  Color background = Colors.blue,
+  Color background = Colors.redAccent,
   bool isUpperCase = true,
-  double radius = 3.0,
+  double radius = 12.0,
   required Function() function,
   required String text,
 }) =>
@@ -93,3 +95,36 @@ Widget defaultTextButton({
         text.toUpperCase(),
       ),
     );
+
+void showToast({
+  required String message,
+  required ToastStates toastStates,
+}) =>
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 5,
+        backgroundColor: choseToastColor(toastStates),
+        textColor: Colors.white,
+        fontSize: 16.0);
+
+enum ToastStates { SUCCESS, ERROR, WARNING }
+
+Color choseToastColor(ToastStates toastStates) {
+  Color color;
+  switch (toastStates) {
+    case ToastStates.SUCCESS:
+      color = Colors.green;
+      break;
+    case ToastStates.WARNING:
+      color = Colors.amber;
+      break;
+    case ToastStates.ERROR:
+      color = Colors.red;
+      break;
+  }
+  return color;
+}
+
+

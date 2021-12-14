@@ -1,8 +1,10 @@
 // ignore_for_file: file_names
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:shop_app/modules/login/loginScreen.dart';
 import 'package:shop_app/shared/components/components.dart';
+import 'package:shop_app/shared/network/SharedPreferences.dart';
 import 'package:shop_app/shared/styles/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -101,7 +103,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   );
                 }
               } ,
-                child: Icon(Icons.arrow_forward_ios),),
+                child: Icon(Icons.arrow_forward_ios , color: Colors.white,),),
             ],)
           ],
         ),
@@ -121,6 +123,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   );
 
   void skip() {
-    navigateFinish(context , LoginScreen());
+    CashHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if (value) {
+        navigateFinish(context , LoginScreen());
+      }
+    });
+
   }
+
 }

@@ -9,7 +9,7 @@ ThemeData darkTheme = ThemeData(
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: colorDefault,
   ),
-  scaffoldBackgroundColor: HexColor('423F3E'),
+  scaffoldBackgroundColor: colorDefault,
   appBarTheme: AppBarTheme(
     iconTheme: IconThemeData(
         color: Colors.white
@@ -33,7 +33,7 @@ ThemeData darkTheme = ThemeData(
     elevation: 20.0,
 
     selectedItemColor: HexColor('EED6C4'),
-    unselectedItemColor: HexColor('423F3E'),
+    unselectedItemColor: colorDefault,
   ),
   textTheme: TextTheme(
     bodyText1: TextStyle(
