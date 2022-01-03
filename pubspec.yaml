@@ -41,6 +41,7 @@ dependencies:
   flutter_conditional_rendering: ^2.0.0
   fluttertoast: ^8.0.8
   buildcondition: ^0.0.4
+  carousel_slider: ^4.0.0
 
 
   dio: ^4.0.0

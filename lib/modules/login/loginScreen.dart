@@ -4,7 +4,7 @@ import 'package:buildcondition/buildcondition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shop_app/homeScreen.dart';
+import 'package:shop_app/modules/home/homeScreen.dart';
 import 'package:shop_app/modules/login/cubit/cubit.dart';
 import 'package:shop_app/modules/login/cubit/states.dart';
 import 'package:shop_app/modules/register/registerScreen.dart';

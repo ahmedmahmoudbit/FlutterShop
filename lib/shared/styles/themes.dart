@@ -47,7 +47,7 @@ ThemeData darkTheme = ThemeData(
 
 ThemeData lightTheme = ThemeData(
 // لون اتطبيق الرئيسي
-primarySwatch: Colors.grey,
+primarySwatch: Colors.red,
 textTheme: TextTheme(
 bodyText1: TextStyle(
 fontSize: 18 , color: HexColor('212121') , fontWeight: FontWeight.bold
@@ -64,7 +64,7 @@ iconTheme: IconThemeData(
 color: Colors.black54
 ),
 // سماح بتغيير لون الشريط العلوي
-
+// سماح بتغيير لون الشريط العلوي
 backwardsCompatibility: false,
 systemOverlayStyle: SystemUiOverlayStyle(
 // لون شريط الايقونات

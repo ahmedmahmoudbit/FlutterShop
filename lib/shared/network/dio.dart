@@ -3,47 +3,72 @@ import 'package:dio/dio.dart';
 class DioHelper {
   static late Dio dio;
 
-  static init() {
+  static void init() {
     dio = Dio(
       BaseOptions(
-        receiveDataWhenStatusError: true,
         baseUrl: 'https://student.valuxapps.com/api/',
+        receiveDataWhenStatusError: true,
+      ),
+    );
+  }
+
+  static Future<Response> postData({
+    required Map<String, dynamic> data,
+    Map<String, dynamic>? query,
+    required String url,
+    String lang = 'en',
+    String? token,
+  }) async {
+    return dio.post(
+      url,
+      data: data,
+      queryParameters: query,
+      options: Options(
+        headers: {
+          'lang': lang,
+          'Content-Type': 'application/json',
+          'Authorization': token ?? '',
+        },
       ),
     );
   }
 
   static Future<Response> getData({
     required String url,
-    Map<String, dynamic>? query,
-    String lang = 'ar',
     String? token,
-  }) async
-  {
-    return await dio.get(
+    Map<String, dynamic>? query,
+  }) {
+    return dio.get(
       url,
+      options: Options(
+        headers: {
+          'lang':'en',
+          'Content-Type':'application/json',
+          'Authorization':token??'',
+        },
+      ),
       queryParameters: query,
     );
   }
 
-  static Future<Response> postData({
-    required String url,
+  static Future<Response> putData({
     required Map<String, dynamic> data,
     Map<String, dynamic>? query,
-    String lang = 'ar',
+    required String url,
+    String lang = 'en',
     String? token,
-  }) async
-  {
-    dio.options.headers =
-    {
-      'lang':lang,
-      'Authorization': token??'',
-      'Content-Type': 'application/json',
-    };
-
-    return dio.post(
+  }) async {
+    return dio.put(
       url,
-      queryParameters: query,
       data: data,
+      queryParameters: query,
+      options: Options(
+        headers: {
+          'lang': lang,
+          'Content-Type': 'application/json',
+          'Authorization': token ?? '',
+        },
+      ),
     );
   }
 }

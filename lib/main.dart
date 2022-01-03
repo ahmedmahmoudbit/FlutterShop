@@ -1,12 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_app/homeScreen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/layout/cubit/cubit.dart';
+import 'package:shop_app/layout/cubit/states.dart';
+import 'package:shop_app/layout/shopLayout.dart';
 import 'package:shop_app/modules/login/loginScreen.dart';
+import 'package:shop_app/shared/components/components.dart';
 import 'package:shop_app/shared/cubit/myBlocObserver.dart';
 import 'package:shop_app/shared/network/SharedPreferences.dart';
 import 'package:shop_app/shared/network/dio.dart';
 import 'package:shop_app/shared/styles/themes.dart';
 import 'modules/on_boarding/onBoarding.dart';
+import 'shared/components/constants.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,14 +21,14 @@ void main() async{
 
   Widget widget;
   bool onBoarding = CashHelper.getData(key: 'onBoarding') == null ? false  : CashHelper.getData(key: 'onBoarding');
-  dynamic token = CashHelper.getData(key: 'token') == null ? null : CashHelper.getData(key: 'token');
+  token = CashHelper.getData(key: 'token') == null ? null : CashHelper.getData(key: 'token');
 
   print(token);
   print(onBoarding);
 
   if (onBoarding == true) {
     if (token != null) {
-      widget = HomeScreen();
+      widget = ShopLayout();
       print(token);
     } else
       widget = LoginScreen();
@@ -43,12 +48,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.light,
-      home: startWidget,
+    return BlocProvider(
+      create: (BuildContext context) => ShopCubit()..getHomeData(),
+      child: BlocConsumer<ShopCubit , ShopStates> (
+        listener:  (context, state) {},
+        builder:  (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: ThemeMode.light,
+            home: startWidget,
+          );
+        },
+      ),
     );
   }
 }
