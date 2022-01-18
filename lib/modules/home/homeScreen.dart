@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/cubit/cubit.dart';
 import 'package:shop_app/layout/cubit/states.dart';
+import 'package:shop_app/models/categoryModel.dart';
 import 'package:shop_app/models/homeModel.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,74 +19,96 @@ class HomeScreen extends StatelessWidget {
           var cubit = ShopCubit.get(context);
           return BuildCondition(
             // ignore: unnecessary_null_comparison
-            condition: cubit.homeModel != null,
+            condition: cubit.homeModel != null && cubit.categoriesModel != null,
             builder: (context) =>
-            productsBuilder(cubit.homeModel , context),
+            productsBuilder(cubit.homeModel , cubit.categoriesModel , context),
             fallback: (context) => progressIndicator(),
           );
         },
     );
   }
-  Widget productsBuilder(HomeModel? model , context)=>
-      SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-        children: [
+  Widget productsBuilder(HomeModel? model ,CategoriesModel? categories , context)=> SingleChildScrollView(
+    physics: BouncingScrollPhysics(),
+    child: Column(
+      children: [
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: CarouselSlider(
-              items: model!.data!.banners
-                  .map(
-                    (e) => ClipRRect(
-                      borderRadius: BorderRadius.circular(12.0),
-                      child: Image(
+            items: model!.data!.banners
+                .map(
+                  (e) => ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Image(
                   image: NetworkImage('${e.image}'),
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
-                    ),
-              ).toList(),
-          options: CarouselOptions(
-          height: MediaQuery.of(context).size.height / 4.2,
-          initialPage: 1,
-          viewportFraction: .85,
-          enableInfiniteScroll: true,
-          // enable image above image another
-          // enlargeStrategy: CenterPageEnlargeStrategy.height,
+              ),
+            ).toList(),
+            options: CarouselOptions(
+              height: MediaQuery.of(context).size.height / 4.2,
+              initialPage: 1,
+              viewportFraction: .85,
+              enableInfiniteScroll: true,
+              // enable image above image another
+              // enlargeStrategy: CenterPageEnlargeStrategy.height,
 
-          reverse: false,
-          autoPlay: true,
-          enlargeCenterPage: true,
-          autoPlayInterval: Duration(seconds: 3),
-          autoPlayAnimationDuration: Duration(seconds: 2),
-          autoPlayCurve: Curves.linearToEaseOut,
-          scrollDirection: Axis.horizontal,
-          ),
+              reverse: false,
+              autoPlay: true,
+              enlargeCenterPage: true,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayAnimationDuration: Duration(seconds: 2),
+              autoPlayCurve: Curves.linearToEaseOut,
+              scrollDirection: Axis.horizontal,
             ),
+          ),
+        ),
+        SizedBox(height: 20,),
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Categories' , style: TextStyle(fontSize: 22),),
+                SizedBox(height: 10,),
+                Container(
+                  height: 100,
+                  child: ListView.separated(
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context,index)=> buildCategoryItem(categories!.data!.data[index] , context) ,
+                      separatorBuilder: (context,index)=> SizedBox(width: 7,),
+                      itemCount: categories!.data!.data.length),
+                ),
+                SizedBox(height: 20,),
+                Text('Products' , style: TextStyle(fontSize: 22),),
+              ],
+            )
         ),
         SizedBox(height: 20,),
         GridView.count(
           shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            mainAxisSpacing: 1.0,
-            crossAxisSpacing: 1.0,
-            childAspectRatio: 1 / 1.37,
-            children: List.generate(
-                model.data!.products.length,
-                  (index) => buildImages(
-                  model.data!.products[index], context),
-            ),
+          physics: NeverScrollableScrollPhysics(),
+          crossAxisCount: 2,
+          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 1.0,
+          childAspectRatio: 1 / 1.45,
+          children: List.generate(
+            model.data!.products.length,
+                (index) => buildImages(
+                model.data!.products[index], context),
+          ),
         ),
-    ],
-  ),
-      );
+      ],
+    ),
+  );
+
   Widget progressIndicator()=> Center(
       child: CircularProgressIndicator());
-  Widget buildImages(ProductsModel model , context)=>
-    Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Card(
+
+  Widget buildImages(ProductsModel model , context)=> Padding(
+    padding: const EdgeInsets.all(5.0),
+    child: Card(
       elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -102,20 +125,21 @@ class HomeScreen extends StatelessWidget {
                 width: double.infinity,
               ),
               if(model.discount !=0)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6),
-                  color: Colors.deepOrange,
-                  child: Text('Discount' , style: TextStyle(fontSize: 10 , color: Colors.white),),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 6),
+                    color: Colors.deepOrange,
+                    child: Text('Discount' , style: TextStyle(fontSize: 10 , color: Colors.white),),
+                  ),
                 ),
-              ),
             ],
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.only(start: 12),
-            child: Text('${model.name}' , maxLines: 2 , overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: TextStyle(fontSize: 13),)
+              padding: const EdgeInsetsDirectional.only(start: 12),
+              child: Text('${model.name}' , maxLines: 2 , overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: TextStyle(fontSize: 13),)
           ),
+          SizedBox(height: 10,),
           Row(
             children: [
               Padding(
@@ -125,17 +149,53 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-             if (model.discount != 0 )
-               Text('${model.oldPrice} E.G' ,style: TextStyle(color: Colors.grey , fontSize: 10 , decoration: TextDecoration.lineThrough)),
               Spacer(),
               IconButton(
-                // padding: EdgeInsets.zero,
+                // Remove padding .
+                constraints: BoxConstraints(),
                 onPressed: (){}, icon: Icon(Icons.favorite_border_rounded) , iconSize: 13,),
             ],
           ),
+          if (model.discount != 0 )
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: 12),
+              child: Text('${model.oldPrice} E.G' ,style: TextStyle(color: Colors.grey , fontSize: 8.5 , decoration: TextDecoration.lineThrough)),
+            ),
         ],
       ),
-  ),
-    );
+    ),
+  );
+
+  Widget buildCategoryItem(DataModel? categories , context )=> Card(
+  margin: EdgeInsets.zero,
+  clipBehavior: Clip.antiAliasWithSaveLayer,
+    shape: RoundedRectangleBorder(
+      side: BorderSide(color: Colors.white70, width: 1),
+      borderRadius: BorderRadius.circular(20),
+    ),
+  child: Stack(
+      alignment: AlignmentDirectional.bottomCenter,
+      children: [
+        Image(image: NetworkImage('${categories!.image}'),
+          height: 100,
+          width: 100,
+          fit: BoxFit.cover,),
+        Container(
+          width: 100.0,
+          color: Colors.black.withOpacity(.7),
+          child: Text(
+            '${categories.name}',
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+
+      ],
+    ),
+  );
 
 }
