@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/models/loginModel.dart';
 import 'package:shop_app/modules/login/cubit/states.dart';
+import 'package:shop_app/shared/components/constants.dart';
 import 'package:shop_app/shared/network/dio.dart';
 import 'package:shop_app/shared/network/endPoints.dart';
 
@@ -24,7 +25,7 @@ class LoginCubit extends Cubit<LoginStates>{
       'password':password,
     }) .then((value){
       loginModel = LoginModel.fromJson(value.data);
-
+      token = loginModel!.data!.token;
       emit(LoginSuccessState(loginModel));
     }).catchError((onError) {
       emit(LoginErrorState(onError.toString()));

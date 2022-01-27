@@ -39,6 +39,7 @@ void main() async{
   runApp(MyApp(
     startWidget: widget,
   ));
+
 }
 
 class MyApp extends StatelessWidget {
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ShopCubit()..getHomeData()..getCategories(),
+      create: (BuildContext context) => ShopCubit()..getHomeData()..getCategories()..getFavorite()..getSettingData(),
       child: BlocConsumer<ShopCubit , ShopStates> (
         listener:  (context, state) {},
         builder:  (context, state) {

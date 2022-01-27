@@ -15,7 +15,21 @@ class ShopLayout extends StatelessWidget {
       builder:  (context, state) {
         var cubit = ShopCubit.get(context);
         return Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text("Shop App"),
+            leading: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CircleAvatar(backgroundImage:NetworkImage('https://images.wallpaperscraft.com/image/single/building_showcase_art_140944_1280x720.jpg'),radius: 3,),
+            ),
+            actions: [
+              IconButton(
+                  onPressed: (){
+                    navigateTo(context, SearchScreen());
+                  },
+                  icon: Icon(Icons.search_rounded))
+            ],
+          ),
           body: cubit.bottomScreen[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: cubit.currentIndex,

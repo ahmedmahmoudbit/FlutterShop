@@ -3,3 +3,5 @@
 const LOGIN = 'login';
 const HOME = 'home';
 const CATEGORY = 'categories';
+const END_FAVORITE = 'favorites';
+const END_SETTING = 'profile';

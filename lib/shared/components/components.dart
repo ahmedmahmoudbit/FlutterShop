@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shop_app/layout/cubit/cubit.dart';
+import 'package:shop_app/models/favorites.dart';
 import 'package:shop_app/shared/styles/colors.dart';
 
 void navigateTo(context , widget)=>
@@ -126,4 +128,5 @@ Color choseToastColor(ToastStates toastStates) {
   }
   return color;
 }
+
 
