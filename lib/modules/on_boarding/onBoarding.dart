@@ -123,7 +123,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   );
 
   void skip() {
-    CashHelper.saveData(key: 'onBoarding', value: true).then((value) {
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
       if (value) {
         navigateFinish(context , LoginScreen());
       }

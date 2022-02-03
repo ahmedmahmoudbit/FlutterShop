@@ -17,11 +17,11 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
-  await CashHelper.init();
+  await CacheHelper.init();
 
   Widget widget;
-  bool onBoarding = CashHelper.getData(key: 'onBoarding') == null ? false  : CashHelper.getData(key: 'onBoarding');
-  token = CashHelper.getData(key: 'token') == null ? null : CashHelper.getData(key: 'token');
+  bool onBoarding = CacheHelper.getData(key: 'onBoarding') == null ? false  : CacheHelper.getData(key: 'onBoarding');
+  token = CacheHelper.getData(key: 'token') == null ? null : CacheHelper.getData(key: 'token');
 
   print(token);
   print(onBoarding);

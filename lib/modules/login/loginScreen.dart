@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                 message: states.loginModel!.message,
                 toastStates: ToastStates.SUCCESS);
 
-            CashHelper.saveData(
+            CacheHelper.saveData(
                 key: 'token', value: states.loginModel!.data!.token)
                 .then((value) {
                   token = states.loginModel!.data!.token;

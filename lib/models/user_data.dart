@@ -1,9 +1,9 @@
-class ProfileDataModel {
+class UserDataModel {
   late bool status;
 
   UserData? data;
 
-  ProfileDataModel.fromJson(Map<String, dynamic> json) {
+  UserDataModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = json['data'] != null ? UserData.fromJson(json['data']) : null;
   }

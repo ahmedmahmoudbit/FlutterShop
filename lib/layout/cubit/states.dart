@@ -1,7 +1,9 @@
+import 'package:shop_app/models/RegisterModel.dart';
 import 'package:shop_app/models/favoritesModel.dart';
 import 'package:shop_app/models/homeModel.dart';
 import 'package:shop_app/models/loginModel.dart';
 import 'package:shop_app/models/user_data.dart';
+import 'package:shop_app/models/changeCart.dart';
 
 abstract class ShopStates  {}
 
@@ -64,7 +66,7 @@ class ShopLoadingGetSettingDataState extends ShopStates {
 }
 
 class ShopSuccessGetSettingDataState extends ShopStates {
-  final ProfileDataModel model;
+  final UserDataModel model;
   ShopSuccessGetSettingDataState(this.model);
 }
 
@@ -73,5 +75,89 @@ class ShopErrorGetSettingDataState extends ShopStates {
   ShopErrorGetSettingDataState(this.error);
 }
 
+// -------------------- register
 
+class RegisterLoadingState extends ShopStates {}
 
+class RegisterSuccessState extends ShopStates {
+  final RegisterModel? registerModel;
+  RegisterSuccessState(this.registerModel);
+}
+
+class RegisterChangePasswordState extends ShopStates {}
+
+class RegisterErrorState extends ShopStates {
+  final String? error;
+  RegisterErrorState(this.error);
+}
+
+// -------------------- update profile
+
+class UpdateLoadingState extends ShopStates {}
+
+class UpdateSuccessState extends ShopStates {
+  final UserDataModel? userModel;
+  UpdateSuccessState(this.userModel);
+}
+
+class UpdateErrorState extends ShopStates {
+  final String? error;
+  UpdateErrorState(this.error);
+}
+
+// -------------------- Details
+
+class ShowMoreState extends ShopStates {}
+
+class DetailsLoadingProductDetailsState extends ShopStates {}
+
+class DetailsSuccessProductDetailsState extends ShopStates {}
+
+class DetailsErrorProductDetailsState extends ShopStates {
+  final String error;
+
+  DetailsErrorProductDetailsState(this.error);
+}
+
+// -------------------- search
+
+class SearchLoadingState extends ShopStates {}
+
+class SearchSuccessState extends ShopStates {
+}
+
+class SearchChangePasswordState extends ShopStates {}
+
+class SearchErrorState extends ShopStates {
+  final String? error;
+  SearchErrorState(this.error);
+}
+
+// -------------------- get cart product
+
+class ShopSuccessGetCartDataState extends ShopStates {}
+
+class ShopLoadingGetCartDataState extends ShopStates {}
+
+class ShopErrorGetCartDataState extends ShopStates {
+  final String error;
+  ShopErrorGetCartDataState(this.error);
+}
+
+// -------------------- change cart
+
+class ShopSuccessChangeCartDataState extends ShopStates {
+  final ChangeCartModel changeCartModel;
+
+  ShopSuccessChangeCartDataState(this.changeCartModel);
+}
+
+class ShopSuccessChangeCartTestDataState extends ShopStates {}
+
+class ShopLoadingChangeCartTestDataState extends ShopStates {}
+
+class ShopErrorChangeCartDataState extends ShopStates {
+  final String error;
+  final ChangeCartModel changeCartModel;
+  ShopErrorChangeCartDataState(this.error, this.changeCartModel);
+}

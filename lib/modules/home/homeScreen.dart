@@ -7,10 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/cubit/cubit.dart';
 import 'package:shop_app/layout/cubit/states.dart';
 import 'package:shop_app/models/categoryModel.dart';
-import 'package:shop_app/models/favoritesModel.dart';
 import 'package:shop_app/models/homeModel.dart';
+import 'package:shop_app/modules/details/details.dart';
 import 'package:shop_app/shared/components/components.dart';
-import 'details/productDetails.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -124,7 +123,12 @@ class HomeScreen extends StatelessWidget {
   Widget buildImages(ProductsModel model , context) {
     return InkWell(
       onTap: (){
-        navigateTo(context, ProductDetails(model : model));
+        navigateTo(
+          context,
+          ProductDetails(
+            productId: model.id!,
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(5.0),
