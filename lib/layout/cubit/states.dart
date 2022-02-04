@@ -161,3 +161,17 @@ class ShopErrorChangeCartDataState extends ShopStates {
   final ChangeCartModel changeCartModel;
   ShopErrorChangeCartDataState(this.error, this.changeCartModel);
 }
+
+// -------------------- Translation
+
+class ChangeLanguageState extends ShopStates {}
+
+class LanguageLoaded extends ShopStates {}
+
+// -------------------- no internet
+
+class InternetState extends ShopStates {}
+
+
+
+

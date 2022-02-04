@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/cubit/cubit.dart';
 import 'package:shop_app/layout/cubit/states.dart';
@@ -22,6 +23,11 @@ void main() async{
   Widget widget;
   bool onBoarding = CacheHelper.getData(key: 'onBoarding') == null ? false  : CacheHelper.getData(key: 'onBoarding');
   token = CacheHelper.getData(key: 'token') == null ? null : CacheHelper.getData(key: 'token');
+  isRtl = CacheHelper.getData(key: 'isRtl') == null ? false : CacheHelper.getData(key: 'isRtl');
+
+  String translation = await rootBundle
+      .loadString('assets/translations/${isRtl ? 'ar' : 'en'}.json');
+
 
   print(token);
   print(onBoarding);
@@ -37,7 +43,7 @@ void main() async{
   print(onBoarding);
 
   runApp(MyApp(
-    startWidget: widget,
+    startWidget: widget, isRtl : isRtl , translation: translation,
   ));
 
 }
@@ -45,12 +51,21 @@ void main() async{
 class MyApp extends StatelessWidget {
 
   final Widget startWidget;
-  MyApp({required this.startWidget});
+  final bool isRtl;
+  final String translation;
+  MyApp({required this.startWidget ,required this.isRtl , required this.translation});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ShopCubit()..getHomeData()..getCategories()..getFavorite()..getSettingData(),
+      create: (BuildContext context) => ShopCubit()
+        ..checkConnectivity()
+        ..getHomeData()
+        ..getCategories()
+        ..getFavorite()
+        ..getSettingData()
+        ..setTranslation(translation: translation),
+
       child: BlocConsumer<ShopCubit , ShopStates> (
         listener:  (context, state) {},
         builder:  (context, state) {

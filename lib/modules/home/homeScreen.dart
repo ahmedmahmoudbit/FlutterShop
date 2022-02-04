@@ -10,6 +10,7 @@ import 'package:shop_app/models/categoryModel.dart';
 import 'package:shop_app/models/homeModel.dart';
 import 'package:shop_app/modules/details/details.dart';
 import 'package:shop_app/shared/components/components.dart';
+import 'package:shop_app/shared/components/constants.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -83,7 +84,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Categories' , style: TextStyle(fontSize: 22),),
+                Text('${appTranslation(context).categories}' , style: TextStyle(fontSize: 22),),
                 SizedBox(height: 10,),
                 Container(
                   height: 100,

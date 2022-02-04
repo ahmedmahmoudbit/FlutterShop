@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/cubit/states.dart';
 import 'package:shop_app/models/RegisterModel.dart';
@@ -19,8 +23,11 @@ import 'package:shop_app/modules/favourite/favourite.dart';
 import 'package:shop_app/modules/home/homeScreen.dart';
 import 'package:shop_app/modules/settings/settings.dart';
 import 'package:shop_app/shared/components/constants.dart';
+import 'package:shop_app/shared/network/SharedPreferences.dart';
 import 'package:shop_app/shared/network/dio.dart';
 import 'package:shop_app/shared/network/endPoints.dart';
+
+import '../../translation.dart';
 
 class ShopCubit extends Cubit<ShopStates> {
   ShopCubit() : super(ShopInitialState());
@@ -322,5 +329,60 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
+// ---------------------------------------- Translation
+  void changeLanguage() async {
+    isRtl = !isRtl;
+
+    CacheHelper.saveData(key: 'isRtl' , value: isRtl);
+    String translation = await rootBundle
+        .loadString('assets/translations/${isRtl ? 'ar' : 'en'}.json');
+    setTranslation(
+      translation: translation,
+    );
+
+    emit(ChangeLanguageState());
+  }
+
+  late TranslationModel translationModel;
+
+  void setTranslation({
+    required String translation,
+  }) {
+    translationModel = TranslationModel.fromJson(json.decode(
+      translation,
+    ));
+    emit(LanguageLoaded());
+  }
+
+  // ------------------------------------ no internet
+
+  bool noInternetConnection = false;
+
+  void checkConnectivity() {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      debugPrint('Internet Connection ------------------------');
+      debugPrint('${result.index}');
+      debugPrint(result.toString());
+      if (result.index == 0 || result.index == 1) {
+        noInternetConnection = false;
+      } else if (result.index == 2) {
+        noInternetConnection = true;
+      }
+
+      emit(InternetState());
+    });
+  }
+
+  void checkInternet() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      noInternetConnection = false;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      noInternetConnection = false;
+    } else {
+      noInternetConnection = true;
+    }
+    emit(InternetState());
+  }
 
 }
